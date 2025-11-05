@@ -1,5 +1,4 @@
-public class Coach
-ввй{
+public class Coach {
 
     //фамилия
     private String surname;
