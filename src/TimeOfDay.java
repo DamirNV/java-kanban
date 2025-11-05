@@ -24,4 +24,10 @@ public class TimeOfDay implements Comparable<TimeOfDay>{
         }
         return Integer.compare(this.minutes, other.minutes);
     }
+
+    @Override
+    public String toString() {
+        return String.format("%02d:%02d", hours, minutes);
+    }
+
 }

@@ -38,4 +38,15 @@ public class Coach {
     public int hashCode() {
         return Objects.hash(getSurname(), getName(), getMiddleName());
     }
+
+    @Override
+    public String toString() {
+        if (middleName == null || middleName.isEmpty()) {
+            return surname + " " + name;
+        } else {
+            return surname + " " + name + " " + middleName;
+        }
+    }
+
+
 }

@@ -7,19 +7,16 @@ public class Timetable {
     public void addNewTrainingSession(TrainingSession trainingSession) {
         DayOfWeek day = trainingSession.getDayOfWeek();
         TimeOfDay time = trainingSession.getTimeOfDay();
-
         Map<TimeOfDay, List<TrainingSession>> daySchedule = timetable.get(day);
         if (daySchedule == null) {
             daySchedule = new TreeMap<>();
             timetable.put(day, daySchedule);
         }
-
         List<TrainingSession> sessionsAtTime = daySchedule.get(time);
         if (sessionsAtTime == null) {
             sessionsAtTime = new ArrayList<>();
             daySchedule.put(time, sessionsAtTime);
         }
-
         sessionsAtTime.add(trainingSession);
     }
 
@@ -33,7 +30,6 @@ public class Timetable {
 
     public HashMap<Coach, Integer> getCountByCoaches() {
         HashMap<Coach, Integer> counterOfTrainings = new HashMap<>();
-
         for (DayOfWeek day : timetable.keySet()) {
             Map<TimeOfDay, List<TrainingSession>> daySchedule = getTrainingSessionsForDay(day);
             if (daySchedule != null) {
@@ -53,10 +49,8 @@ public class Timetable {
                 }
             }
         }
-
         HashMap<Coach, Integer> sortedCounterOfTrainings = new LinkedHashMap<>();
         HashMap<Coach, Integer> copyCounterOfTrainings = new HashMap<>(counterOfTrainings);
-
         for (int i = 0; i < counterOfTrainings.size(); i++) {
             int maxCount = 0;
             Coach maxValueCoach = null;
@@ -69,7 +63,6 @@ public class Timetable {
             sortedCounterOfTrainings.put(maxValueCoach, maxCount);
             copyCounterOfTrainings.remove(maxValueCoach);
         }
-
         return sortedCounterOfTrainings;
     }
 
