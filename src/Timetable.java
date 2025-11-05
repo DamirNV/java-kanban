@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Timetable {
 
@@ -57,7 +53,24 @@ public class Timetable {
                 }
             }
         }
-        return counterOfTrainings;
+
+        HashMap<Coach, Integer> sortedCounterOfTrainings = new LinkedHashMap<>();
+        HashMap<Coach, Integer> copyCounterOfTrainings = new HashMap<>(counterOfTrainings);
+
+        for (int i = 0; i < counterOfTrainings.size(); i++) {
+            int maxCount = 0;
+            Coach maxValueCoach = null;
+            for (Coach coach : copyCounterOfTrainings.keySet()) {
+                if (copyCounterOfTrainings.get(coach) > maxCount) {
+                    maxCount = copyCounterOfTrainings.get(coach);
+                    maxValueCoach = coach;
+                }
+            }
+            sortedCounterOfTrainings.put(maxValueCoach, maxCount);
+            copyCounterOfTrainings.remove(maxValueCoach);
+        }
+
+        return sortedCounterOfTrainings;
     }
 
 }
