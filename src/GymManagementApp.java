@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Main {
+public class GymManagementApp {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static Timetable timetable = new Timetable();
