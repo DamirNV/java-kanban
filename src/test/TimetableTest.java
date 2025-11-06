@@ -1,7 +1,10 @@
-import static org.junit.Assert.assertNull;
+package test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+import entities.*;
 import org.junit.jupiter.api.Test;
+import services.Timetable;
 
 import java.util.ArrayList;
 import java.util.List;

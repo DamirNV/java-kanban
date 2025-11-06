@@ -1,3 +1,5 @@
+package entities;
+
 public enum DayOfWeek {
     MONDAY("Понедельник"),
     TUESDAY("Вторник"),

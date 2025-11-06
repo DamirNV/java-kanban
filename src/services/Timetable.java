@@ -1,3 +1,7 @@
+package services;
+
+import entities.*;
+
 import java.util.*;
 
 public class Timetable {

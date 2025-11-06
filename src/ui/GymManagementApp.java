@@ -1,3 +1,8 @@
+package ui;
+
+import entities.*;
+import services.Timetable;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -41,11 +46,11 @@ public class GymManagementApp {
         System.out.println("          Программа для учета гимнастического зала              ");
         System.out.println("                          Gym master                            ");
         System.out.println("Выберите действие:");
-        System.out.println("1 — Добавить тренировку в недельное расписание.");
-        System.out.println("2 — Показать все тренировки на выбранный день.");
-        System.out.println("3 — Показать все тренировки на выбранный день и время.");
-        System.out.println("4 — Показать, сколько занятий у тренера на этой неделе.");
-        System.out.println("5 — Выйти из программы.");
+        System.out.println("1 — \uD83D\uDCC5 Добавить тренировку в недельное расписание.");
+        System.out.println("2 — \uD83D\uDC40 Показать все тренировки на выбранный день.");
+        System.out.println("3 — \u23F0 Показать все тренировки на выбранный день и время.");
+        System.out.println("4 — \uD83D\uDCCA Показать, сколько занятий у тренера на этой неделе.");
+        System.out.println("5 — \uD83D\uDEAA Выйти из программы.");
         System.out.println("╚══════════════════════════════════════════════════════════════╝");
     }
 

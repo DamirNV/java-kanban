@@ -1,3 +1,5 @@
+package entities;
+
 public enum Age {
     CHILD("Детская"),
     ADULT("Взрослая");

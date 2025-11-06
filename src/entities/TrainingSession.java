@@ -1,3 +1,5 @@
+package entities;
+
 import java.util.Objects;
 
 public class TrainingSession {
@@ -48,7 +50,7 @@ public class TrainingSession {
 
     @Override
     public String toString() {
-        return "TrainingSession{" +
+        return "entities.TrainingSession{" +
                 "group=" + group.getTitle() +
                 ", coach=" + coach +
                 ", dayOfWeek=" + dayOfWeek +
