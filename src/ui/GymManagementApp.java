@@ -29,7 +29,7 @@ public class GymManagementApp {
                     showTrainingSessionsForDayAndTime();
                     break;
                 case 4:
-                    сountByCoaches();
+                    countByCoaches();
                     break;
                 case 5:
                     running = false;
@@ -212,7 +212,7 @@ public class GymManagementApp {
 
     }
 
-    private static void сountByCoaches() {
+    private static void countByCoaches() {
         Map<Coach, Integer> coachStats = timetable.getCountByCoaches();
         System.out.println("\n=== Статистика тренеров за неделю ===");
         if (coachStats.isEmpty()) {
