@@ -123,6 +123,76 @@ public class TimetableTest {
         assertTrue(sessions.contains(session2), "Должно содержать второе занятие");
     }
 
+    @Test
+    public void testAddDuplicateSessionIsPrevented() {
+        Timetable timetable = new Timetable();
+        Group group = new Group("Йога", Age.ADULT, 60);
+        Coach coach = new Coach("Иванов", "Иван", "Иванович");
+        TrainingSession session = new TrainingSession(group, coach,
+                DayOfWeek.MONDAY, new TimeOfDay(10, 0));
+
+        timetable.addNewTrainingSession(session);
+        timetable.addNewTrainingSession(session);
+
+        Map<TimeOfDay, List<TrainingSession>> schedule = timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY);
+        assertEquals(1, schedule.size());
+        assertEquals(1, schedule.get(new TimeOfDay(10, 0)).size());
+    }
+
+    @Test
+    public void testCoachCannotHaveTwoSessionsAtSameTime() {
+        Timetable timetable = new Timetable();
+        Coach coach = new Coach("Иванов", "Иван", "Иванович");
+
+        Group group1 = new Group("Йога", Age.ADULT, 60);
+        Group group2 = new Group("Пилатес", Age.ADULT, 45);
+
+        TrainingSession session1 = new TrainingSession(group1, coach,
+                DayOfWeek.MONDAY, new TimeOfDay(10, 0));
+        TrainingSession session2 = new TrainingSession(group2, coach,
+                DayOfWeek.MONDAY, new TimeOfDay(10, 0));
+
+        timetable.addNewTrainingSession(session1);
+        timetable.addNewTrainingSession(session2);
+
+        List<TrainingSession> sessions = timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY,
+                new TimeOfDay(10, 0));
+        assertEquals(1, sessions.size());
+        assertEquals(session1, sessions.get(0));
+    }
+
+    @Test
+    public void testTimeOverlapIsPrevented() {
+        Timetable timetable = new Timetable();
+        Coach coach = new Coach("Иванов", "Иван", "Иванович");
+
+        Group group1 = new Group("Йога", Age.ADULT, 60);
+        TrainingSession session1 = new TrainingSession(group1, coach,
+                DayOfWeek.MONDAY, new TimeOfDay(10, 0));
+
+        Group group2 = new Group("Пилатес", Age.ADULT, 45);
+        TrainingSession session2 = new TrainingSession(group2, coach,
+                DayOfWeek.MONDAY, new TimeOfDay(10, 30));
+
+        timetable.addNewTrainingSession(session1);
+        timetable.addNewTrainingSession(session2);
+
+        List<TrainingSession> sessions = timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY,
+                new TimeOfDay(10, 0));
+        assertEquals(1, sessions.size());
+        assertEquals(session1, sessions.get(0));
+        assertTrue(timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY,
+                new TimeOfDay(10, 30)) == null);
+    }
+
+
+
+
+
+
+
+
+
 
 
 }
