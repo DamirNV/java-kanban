@@ -1,24 +1,36 @@
-import org.junit.Test;
+import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class TimetableTest {
 
     @Test
-    void testGetTrainingSessionsForDaySingleSession() {
+    public void testGetTrainingSessionsForDaySingleSession() {
         Timetable timetable = new Timetable();
-
         Group group = new Group("Акробатика для детей", Age.CHILD, 60);
         Coach coach = new Coach("Васильев", "Николай", "Сергеевич");
         TrainingSession singleTrainingSession = new TrainingSession(group, coach,
                 DayOfWeek.MONDAY, new TimeOfDay(13, 0));
-
         timetable.addNewTrainingSession(singleTrainingSession);
 
-        //Проверить, что за понедельник вернулось одно занятие
-        //Проверить, что за вторник не вернулось занятий
+        int expectedOnMonday = 1;
+        Map<TimeOfDay, List<TrainingSession>> mondaySchedule = timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY);
+        assertNotNull(mondaySchedule, "Расписание на понедельник не должно быть null");
+        assertEquals(expectedOnMonday, mondaySchedule.size(), "За понедельник вернулось не 1 занятие.");
+
+        int expectedOnTuesday = 0;
+        Map<TimeOfDay, List<TrainingSession>> tuesdaySchedule  = timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY);
+        int actualTuesdaySize = (tuesdaySchedule == null) ? 0 : tuesdaySchedule.size();
+        assertEquals(expectedOnTuesday, actualTuesdaySize, "За вторник вернулось не 0 занятий.");
     }
 
     @Test
-    void testGetTrainingSessionsForDayMultipleSessions() {
+    public void testGetTrainingSessionsForDayMultipleSessions() {
         Timetable timetable = new Timetable();
 
         Coach coach = new Coach("Васильев", "Николай", "Сергеевич");
@@ -41,25 +53,51 @@ public class TimetableTest {
         timetable.addNewTrainingSession(thursdayChildTrainingSession);
         timetable.addNewTrainingSession(saturdayChildTrainingSession);
 
-        // Проверить, что за понедельник вернулось одно занятие
-        // Проверить, что за четверг вернулось два занятия в правильном порядке: сначала в 13:00, потом в 20:00
-        // Проверить, что за вторник не вернулось занятий
+        int expectedOnMonday = 1;
+        Map<TimeOfDay, List<TrainingSession>> mondaySchedule = timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY);
+        assertNotNull(mondaySchedule, "Расписание на понедельник не должно быть null");
+        assertEquals(expectedOnMonday, mondaySchedule.size(), "За понедельник вернулось не 1 занятие.");
+
+        int expectedOnThursday = 2;
+        Map<TimeOfDay, List<TrainingSession>> thursdaySchedule = timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY);
+        assertNotNull(thursdaySchedule , "Расписание на четверг не должно быть null");
+        assertEquals(expectedOnThursday , thursdaySchedule.size(), "За четверг вернулось не 2 занятия.");
+        List<TimeOfDay> times = new ArrayList<>(thursdaySchedule.keySet());
+        assertEquals(new TimeOfDay(13, 0), times.get(0), "Первым должно быть время 13:00");
+        assertEquals(new TimeOfDay(20, 0), times.get(1), "Вторым должно быть время 20:00");
+
+        Map<TimeOfDay, List<TrainingSession>> tuesdaySchedule  = timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY);
+        assertTrue(tuesdaySchedule == null || tuesdaySchedule.isEmpty(),
+                "За вторник не должно быть занятий");
     }
 
     @Test
-    void testGetTrainingSessionsForDayAndTime() {
+    public void testGetTrainingSessionsForDayAndTime() {
         Timetable timetable = new Timetable();
+        TimeOfDay timeOfDay = new TimeOfDay(13, 0);
 
         Group group = new Group("Акробатика для детей", Age.CHILD, 60);
         Coach coach = new Coach("Васильев", "Николай", "Сергеевич");
         TrainingSession singleTrainingSession = new TrainingSession(group, coach,
-                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+                DayOfWeek.MONDAY, timeOfDay);
 
         timetable.addNewTrainingSession(singleTrainingSession);
 
-        //Проверить, что за понедельник в 13:00 вернулось одно занятие
-        //Проверить, что за понедельник в 14:00 не вернулось занятий
+        int expectedOnMondayOn_13_00 = 1;
+        List<TrainingSession> mondayScheduleOn_13_00 = timetable.getTrainingSessionsForDayAndTime(
+                DayOfWeek.MONDAY, timeOfDay);
+        assertNotNull(mondayScheduleOn_13_00, "Расписание на понедельник не должно быть null");
+        assertEquals(expectedOnMondayOn_13_00, mondayScheduleOn_13_00.size(), "За понедельник вернулось " +
+                "не 1 занятие.");
+
+        List<TrainingSession> mondayScheduleOn_14_00 = timetable.getTrainingSessionsForDayAndTime(
+                DayOfWeek.MONDAY, new TimeOfDay(14, 0));
+        assertTrue(mondayScheduleOn_14_00 == null || mondayScheduleOn_14_00.isEmpty(),
+                "За понедельник в 14:00 не должно быть занятий");
+
     }
+
+
 
 }
 
