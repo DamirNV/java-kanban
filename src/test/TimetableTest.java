@@ -61,7 +61,7 @@ public class TimetableTest {
         assertEquals(1, mondaySchedule.size(), "За понедельник вернулось не 1 занятие.");
 
         Map<TimeOfDay, List<TrainingSession>> thursdaySchedule = timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY);
-        assertNotNull(thursdaySchedule , "Расписание на четверг не должно быть null");
+        assertNotNull(thursdaySchedule, "Расписание на четверг не должно быть null");
         assertEquals(2, thursdaySchedule.size(), "За четверг вернулось не 2 занятия.");
         List<TimeOfDay> times = new ArrayList<>(thursdaySchedule.keySet());
         assertEquals(new TimeOfDay(13, 0), times.get(0), "Первым должно быть время 13:00");
@@ -85,15 +85,15 @@ public class TimetableTest {
 
         timetable.addNewTrainingSession(singleTrainingSession);
 
-        List<TrainingSession> mondayScheduleOn_13_00 = timetable.getTrainingSessionsForDayAndTime(
+        List<TrainingSession> mondayScheduleAt1300 = timetable.getTrainingSessionsForDayAndTime(
                 DayOfWeek.MONDAY, timeOfDay);
-        assertNotNull(mondayScheduleOn_13_00, "Расписание на понедельник не должно быть null");
-        assertEquals(1, mondayScheduleOn_13_00.size(), "За понедельник вернулось " +
+        assertNotNull(mondayScheduleAt1300, "Расписание на понедельник не должно быть null");
+        assertEquals(1, mondayScheduleAt1300.size(), "За понедельник вернулось " +
                 "не 1 занятие.");
 
-        List<TrainingSession> mondayScheduleOn_14_00 = timetable.getTrainingSessionsForDayAndTime(
+        List<TrainingSession> mondayScheduleAt1400 = timetable.getTrainingSessionsForDayAndTime(
                 DayOfWeek.MONDAY, new TimeOfDay(14, 0));
-        assertTrue(mondayScheduleOn_14_00 == null || mondayScheduleOn_14_00.isEmpty(),
+        assertTrue(mondayScheduleAt1400 == null || mondayScheduleAt1400.isEmpty(),
                 "За понедельник в 14:00 не должно быть занятий");
 
     }
