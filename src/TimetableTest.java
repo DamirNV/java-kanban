@@ -97,6 +97,32 @@ public class TimetableTest {
 
     }
 
+    @Test
+    public void testMultipleSessionsAtSameTime() {
+        Timetable timetable = new Timetable();
+        TimeOfDay time = new TimeOfDay(10, 0);
+        DayOfWeek day = DayOfWeek.MONDAY;
+
+        Coach coach1 = new Coach("Иванов", "Иван", "Иванович");
+        Coach coach2 = new Coach("Петрова", "Ольга", "Владимировна");
+
+        Group group1 = new Group("Йога", Age.ADULT, 60);
+        Group group2 = new Group("Пилатес", Age.ADULT, 45);
+
+        TrainingSession session1 = new TrainingSession(group1, coach1, day, time);
+        TrainingSession session2 = new TrainingSession(group2, coach2, day, time);
+
+        timetable.addNewTrainingSession(session1);
+        timetable.addNewTrainingSession(session2);
+
+        List<TrainingSession> sessions = timetable.getTrainingSessionsForDayAndTime(day, time);
+
+        assertNotNull(sessions);
+        assertEquals(2, sessions.size(), "В одно время должно быть 2 занятия");
+        assertTrue(sessions.contains(session1), "Должно содержать первое занятие");
+        assertTrue(sessions.contains(session2), "Должно содержать второе занятие");
+    }
+
 
 
 }
