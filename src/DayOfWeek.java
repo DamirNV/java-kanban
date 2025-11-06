@@ -21,4 +21,5 @@ public enum DayOfWeek {
     public String toString() {
         return russianName;
     }
+
 }

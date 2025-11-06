@@ -1,11 +1,9 @@
 import java.util.Objects;
 
 public class Group {
-    //название группы
+
     private String title;
-    //тип (взрослая или детская)
     private Age age;
-    //длительность (в минутах)
     private int duration;
 
     public Group(String title, Age age, int duration) {
@@ -39,6 +37,11 @@ public class Group {
     @Override
     public int hashCode() {
         return Objects.hash(title, age, duration);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%s, %d мин.)", title, age.getRussianName(), duration);
     }
 
 }
