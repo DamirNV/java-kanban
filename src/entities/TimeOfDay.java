@@ -1,0 +1,49 @@
+package entities;
+
+import java.util.Objects;
+
+public class TimeOfDay implements Comparable<TimeOfDay> {
+
+    private int hours;
+    private int minutes;
+
+    public TimeOfDay(int hours, int minutes) {
+        this.hours = hours;
+        this.minutes = minutes;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    @Override
+    public int compareTo(TimeOfDay other) {
+        if (this.hours != other.hours) {
+            return Integer.compare(this.hours, other.hours);
+        }
+        return Integer.compare(this.minutes, other.minutes);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%02d:%02d", hours, minutes);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TimeOfDay timeOfDay = (TimeOfDay) o;
+        return hours == timeOfDay.hours && minutes == timeOfDay.minutes;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hours, minutes);
+    }
+
+}
